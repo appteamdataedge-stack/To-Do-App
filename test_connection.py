@@ -5,6 +5,13 @@ import os
 import sys
 
 try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    print("python-dotenv not found. Install it with: pip install python-dotenv")
+    sys.exit(1)
+
+try:
     import psycopg2
 except ImportError:
     print("psycopg2 not found. Install it with: pip install psycopg2-binary")
@@ -12,8 +19,8 @@ except ImportError:
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 if not DATABASE_URL:
-    print("ERROR: DATABASE_URL environment variable is not set.")
-    print("Copy .env.example to .env and fill in your Aiven credentials.")
+    print("ERROR: DATABASE_URL not found in .env file or environment.")
+    print("Make sure your .env file contains: DATABASE_URL=postgres://...")
     sys.exit(1)
 
 
